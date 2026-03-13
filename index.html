@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #666464;
+        font-family: Arial;
+      }
+
+      img {
+        width: 500px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border: 2px solid #000000;
+      }
+
+      button {
+        padding: 10px 25px;
+        font-size: 16px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <img id="randimg" />
+
+    <button id="btn">Random Image</button>
+
+    <script>
+      const img = document.querySelector("#randimg");
+      const btn = document.querySelector("#btn");
+
+      async function fetchAPI() {
+        try {
+          const random = Math.floor(Math.random() * 1000);
+
+          img.src = `https://picsum.photos/500/300?random=${random}`;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      btn.addEventListener("click", fetchAPI);
+
+      fetchAPI();
+    </script>
+  </body>
+</html>
