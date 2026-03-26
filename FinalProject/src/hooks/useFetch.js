@@ -1,21 +1,28 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export const useFetch = (url) => {
-  const [data, setData] = useState(null);
+export const useFetchProducts = () => {
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(url)
+    fetch("https://api.escuelajs.co/api/v1/products?limit=12&offset=0")
       .then((res) => res.json())
-      .then((result) => {
-        setData(result);
-        setLoading(false); 
+      .then((data) => {
+        const formattedData = data.map((item) => ({
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          thumbnail: item.images[0] 
+        }));
+        
+        setProducts(formattedData);
+        setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
-        setLoading(false); 
+        console.error("Error fetching products:", error);
+        setLoading(false);
       });
-  }, [url]);
+  }, []);
 
-  return { data, loading };
+  return { products, loading };
 };
